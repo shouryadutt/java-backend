@@ -29,7 +29,7 @@ def call(String imageName, String awsAccountId, String awsRegion) {
                steps{
                     script {
                       docker.withRegistry('https://810678507647.dkr.ecr.eu-north-1.amazonaws.com/angular-build:latest') {
-                        
+                           docker.image('java-build').push('latest')
                       }
                     }
                }
