@@ -16,13 +16,16 @@ def call(String imageName, String awsAccountId, String awsRegion) {
                            }
                       }
                   }
-            }  
+            }
+            stage ('git checkout'){
+                steps{
+                    git branch: 'main', credentialsId: '248afc5d-3125-40c3-ad29-d495ee43ebd5', url: 'https://github.com/shouryadutt/java-backend'
+                }
+            }
                      
              stage('maven build'){
-                steps{
-                   script{ 
-                      bat 'mvn clean package'      
-                     }
+                steps{    
+                   bat 'mvn clean package'      
                  }
               }
              stage('Push Docker Image to AWS ECR') {
