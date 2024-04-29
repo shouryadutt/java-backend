@@ -28,6 +28,22 @@ def call(String imageName, String awsAccountId, String awsRegion) {
                    bat 'mvn clean package'      
                  }
               }
+           stage('Build Docker Image') {
+                steps {
+                    script {
+                        docker.build('java-build')
+                    }
+                }
+            }
+            stage('Push Docker Image to AWS ECR') {
+                steps {
+                    script {
+                        docker.withRegistry('https://810678507647.dkr.ecr.eu-north-1.amazonaws.com/java-build:latest') {
+                            docker.image('java-build').push('latest')
+                        }
+                    }
+                }
+            }
             
         }
     }
